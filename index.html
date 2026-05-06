@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>شاركنا برأيك - المنصة الذكية - كلية العلوم</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --bg-deep:    #0f0c2e;
+      --bg-mid:     #1a1550;
+      --bg-card:    rgba(255,255,255,0.06);
+      --accent:     #4f6ef7;
+      --accent2:    #7c3aed;
+      --glow:       #6366f1;
+      --text-main:  #e8e8f8;
+      --text-muted: #9b9bbf;
+      --border:     rgba(255,255,255,0.12);
+      --input-bg:   rgba(255,255,255,0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+   
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,110,247,.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(124,58,237,.22) 0%, transparent 60%),
+        linear-gradient(160deg, #0f0c2e 0%, #1a1550 50%, #0d0b27 100%);
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      from { opacity: 1; }
+      to   { opacity: .85; }
+    }
+
+    
+    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: .4;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(110vh) scale(1); opacity: .4; }
+      100% { transform: translateY(-10vh)  scale(0); opacity: 0; }
+    }
+
+   
+    .navbar {
+      position: relative; z-index: 100;
+      background: rgba(15,12,46,.85);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: .75rem 2rem;
+    }
+    .navbar-brand {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--text-main) !important;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .navbar-brand .brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+    }
+    .nav-link {
+      color: var(--text-muted) !important;
+      font-weight: 500; font-size: .9rem;
+      transition: color .2s;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text-main) !important; }
+    .nav-link.active {
+      background: rgba(79,110,247,.18);
+      border-radius: 8px;
+      padding: .35rem .85rem !important;
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1.5px solid var(--accent);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-family: 'Cairo', sans-serif;
+      font-size: .85rem;
+      padding: .35rem 1rem;
+      transition: all .25s;
+    }
+    .btn-logout:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .avatar {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .85rem;
+      cursor: pointer;
+    }
+
+  
+    .main-content {
+      position: relative; z-index: 10;
+      padding: 3rem 1.5rem 5rem;
+    }
+    .page-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 0 30px rgba(79,110,247,.5);
+      animation: iconGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes iconGlow {
+      from { box-shadow: 0 0 20px rgba(79,110,247,.4); }
+      to   { box-shadow: 0 0 40px rgba(124,58,237,.7); }
+    }
+    .page-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, #fff 30%, var(--accent) 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .75rem;
+    }
+    .page-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .95rem;
+      max-width: 500px;
+      margin: 0 auto 3rem;
+    }
+
+  
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      backdrop-filter: blur(10px);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      animation: slideIn .5s ease both;
+    }
+    .info-card:hover {
+      transform: translateX(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(79,110,247,.2);
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .info-card:nth-child(1) { animation-delay: .1s; }
+    .info-card:nth-child(2) { animation-delay: .2s; }
+    .info-card:nth-child(3) { animation-delay: .3s; }
+    .info-card:nth-child(4) { animation-delay: .4s; }
+
+    .info-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(79,110,247,.25), rgba(124,58,237,.25));
+      border: 1px solid rgba(79,110,247,.3);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .info-label {
+      font-weight: 700; font-size: .9rem;
+      color: var(--text-main);
+    }
+    .info-value {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: .1rem;
+    }
+
+  
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(14px);
+      animation: fadeUp .6s ease .1s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-label {
+      font-weight: 600; font-size: .88rem;
+      color: var(--text-main);
+      margin-bottom: .45rem;
+      display: block;
+    }
+    .form-control, .form-select {
+      background: var(--input-bg) !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: 12px !important;
+      color: var(--text-main) !important;
+      font-family: 'Cairo', sans-serif;
+      font-size: .9rem;
+      padding: .65rem 1rem;
+      transition: border-color .2s, box-shadow .2s;
+      width: 100%;
+    }
+    .form-control::placeholder { color: var(--text-muted) !important; }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 3px rgba(79,110,247,.2) !important;
+      outline: none !important;
+      background: rgba(79,110,247,.08) !important;
+    }
+    textarea.form-control { resize: none; min-height: 130px; }
+
+  
+    .rating-group { display: flex; gap: .4rem; flex-direction: row-reverse; justify-content: flex-end; }
+    .rating-group input { display: none; }
+    .rating-group label {
+      font-size: 1.6rem;
+      color: var(--border);
+      cursor: pointer;
+      transition: color .15s, transform .15s;
+    }
+    .rating-group input:checked ~ label,
+    .rating-group label:hover,
+    .rating-group label:hover ~ label {
+      color: #f59e0b;
+    }
+    .rating-group label:hover { transform: scale(1.15); }
+
+  
+    .chip-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip {
+      padding: .4rem 1rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      font-size: .82rem;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .chip.active, .chip:hover {
+      border-color: var(--accent);
+      background: rgba(79,110,247,.18);
+      color: var(--text-main);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: .9rem;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      margin-top: .5rem;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(79,110,247,.5);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit .btn-shine {
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      transition: left .45s;
+    }
+    .btn-submit:hover .btn-shine { left: 150%; }
+
+   
+    #successOverlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,8,30,.85);
+      backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+    }
+    #successOverlay.show { display: flex; }
+    .success-box {
+      background: linear-gradient(135deg, #1a1550, #0f0c2e);
+      border: 1px solid var(--accent);
+      border-radius: 24px;
+      padding: 2.5rem;
+      text-align: center;
+      max-width: 380px;
+      animation: popIn .4s cubic-bezier(.175,.885,.32,1.275) both;
+      box-shadow: 0 0 60px rgba(79,110,247,.4);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .success-icon {
+      width: 70px; height: 70px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.25rem;
+    }
+
+   
+    .field-error { font-size: .78rem; color: #f87171; margin-top: .3rem; display: none; }
+    .was-validated .invalid { border-color: #f87171 !important; }
+  </style>
+</head>
+<body>
+
+
+<div class="particles" id="particles"></div>
+
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <span class="navbar-brand">
+      <div class="brand-icon"><i class="fas fa-flask" style="color:#fff"></i></div>
+      المنصة الذكية - كلية العلوم
+    </span>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="fas fa-bars" style="color:var(--text-main)"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link" href="#">الرئيسية</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">المميزات</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">الأقسام</a></li>
+        <li class="nav-item"><a class="nav-link active" href="#">شاركنا</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+        <div class="avatar">MA</div>
+        <button class="btn-logout"><i class="fas fa-arrow-right-from-bracket me-1"></i> تسجيل الخروج</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="main-content">
+  <div class="container">
+
+  
+    <div class="page-icon"><i class="fas fa-comments" style="color:#fff"></i></div>
+    <h1 class="page-title">شاركنا برأيك</h1>
+    <p class="page-subtitle">هل لديك استفسار او مشكله؟ راسلنا و سيتم الرد في اسرع وقت</p>
+
+    <div class="row g-4">
+
+  
+      <div class="col-lg-4">
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="info-label">البريد الإلكتروني</div>
+            
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+          <div>
+            <div class="info-label">الموقع</div>
+            <div class="info-value">جامعة السويس – كلية العلوم</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="info-label">وقت الرد</div>
+            <div class="info-value">خلال 24 ساعة من استلام رأيك</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-headset"></i></div>
+          <div>
+            <div class="info-label">الدعم الفني</div>
+            <div class="info-value">فريق متخصص جاهز لمساعدتك دائماً</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col-lg-8">
+        <div class="form-card">
+          <form id="opinionForm" novalidate>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label" for="fullName">الاسم</label>
+                <input type="text" class="form-control" id="fullName" placeholder="أدخل اسمك الكامل"/>
+                <div class="field-error" id="nameErr">يرجى إدخال الاسم الكامل</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="uniCode">الكود الجامعي</label>
+                <input type="text" class="form-control" id="uniCode" placeholder="أدخل الكود الجامعي"/>
+                <div class="field-error" id="codeErr">يرجى إدخال الكود الجامعي</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="email">البريد الإلكتروني</label>
+              <input type="email" class="form-control" id="email" placeholder="أدخل بريدك الإلكتروني"/>
+              <div class="field-error" id="emailErr">يرجى إدخال بريد إلكتروني صحيح</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">موضوع الرأي</label>
+              <div class="chip-group" id="chipGroup">
+                <span class="chip active" data-val="واجهة المنصة">واجهة المنصة</span>
+                <span class="chip" data-val="المحتوى التعليمي">المحتوى التعليمي</span>
+                <span class="chip" data-val="الأداء والسرعة">الأداء والسرعة</span>
+                <span class="chip" data-val="الدعم الفني">الدعم الفني</span>
+                <span class="chip" data-val="مقترحات عامة">مقترحات عامة</span>
+                <span class="chip" data-val="أخرى">أخرى</span>
+              </div>
+            </div>
+
+            
+
+            <div class="mb-3">
+              <label class="form-label" for="message">رأيك / اقتراحك</label>
+              <textarea class="form-control" id="message" placeholder="اكتب رأيك أو اقتراحك هنا..."></textarea>
+              <div class="field-error" id="msgErr">يرجى كتابة رأيك أو اقتراحك</div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              <span class="btn-shine"></span>
+              <i class="fas fa-paper-plane ms-2"></i> إرسال رأيك ←
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon"><i class="fas fa-check" style="color:#fff"></i></div>
+    <h4 style="font-weight:800;margin-bottom:.5rem">شكراً لك!</h4>
+    <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1.5rem">
+      تم إرسال رأيك بنجاح. سنأخذه بعين الاعتبار في تطوير المنصة.
+    </p>
+    <button class="btn-submit" onclick="closeSuccess()" style="max-width:200px;margin:0 auto">
+      <span class="btn-shine"></span> إغلاق
+    </button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${Math.random()*3+1}px;
+      height:${Math.random()*3+1}px;
+      animation-duration:${Math.random()*12+8}s;
+      animation-delay:${Math.random()*10}s;
+      opacity:${Math.random()*.5+.1};
+    `;
+    container.appendChild(p);
+  }
+
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+    });
+  });
+
+
+  document.getElementById('opinionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    const name  = document.getElementById('fullName');
+    const code  = document.getElementById('uniCode');
+    const email = document.getElementById('email');
+    const msg   = document.getElementById('message');
+
+    const showErr = (id, fieldEl) => { document.getElementById(id).style.display='block'; fieldEl.classList.add('invalid'); };
+    const hideErr = (id, fieldEl) => { document.getElementById(id).style.display='none';  fieldEl.classList.remove('invalid'); };
+
+    if (!name.value.trim())  { showErr('nameErr', name);  valid = false; } else hideErr('nameErr', name);
+    if (!code.value.trim())  { showErr('codeErr', code);  valid = false; } else hideErr('codeErr', code);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) { showErr('emailErr', email); valid = false; } else hideErr('emailErr', email);
+    if (!msg.value.trim())   { showErr('msgErr', msg);    valid = false; } else hideErr('msgErr', msg);
+
+    if (valid) {
+      document.getElementById('successOverlay').classList.add('show');
+      this.reset();
+      document.querySelectorAll('.chip').forEach((c,i) => c.classList.toggle('active', i===0));
+      document.getElementById('s3').checked = true;
+    }
+  });
+
+  function closeSuccess() {
+    document.getElementById('successOverlay').classList.remove('show');
+  }
+</script>
+</body>
+</html>
